@@ -1,6 +1,6 @@
 {
   "name": "esbuild-plugin-modify-entrypoints",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "esbuild plugin to modify entrypoint contents",
   "license": "MIT",
   "author": {
