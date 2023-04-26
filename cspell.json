@@ -5,7 +5,6 @@
     "entrypoints",
     "env",
     "esbuild",
-    "escaperegexp",
     "npmrc",
     "pnpm",
     "postbuild",
