@@ -1,0 +1,90 @@
+{
+  "name": "esbuild-plugin-modify-entrypoints",
+  "version": "0.0.0",
+  "description": "esbuild plugin to modify entrypoint contents",
+  "license": "MIT",
+  "author": {
+    "email": "eric@webdeveric.com",
+    "name": "Eric King",
+    "url": "http://webdeveric.com/"
+  },
+  "keywords": [
+    "esbuild",
+    "plugin",
+    "modify",
+    "entrypoints"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webdeveric/esbuild-plugin-modify-entrypoints.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webdeveric/esbuild-plugin-modify-entrypoints/issues"
+  },
+  "homepage": "https://github.com/webdeveric/esbuild-plugin-modify-entrypoints",
+  "type": "module",
+  "packageManager": "pnpm@8.3.1",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/plugin.d.ts",
+      "require": "./dist/cjs/plugin.js",
+      "import": "./dist/mjs/plugin.js"
+    },
+    "./*": {
+      "types": "./dist/types/*.d.ts",
+      "require": "./dist/cjs/*.js",
+      "import": "./dist/mjs/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "eslint --fix ./*{js,cjs,mjs,mts} ./src",
+    "clean": "rimraf ./dist/",
+    "prebuild": "npm run clean",
+    "build:cjs": "tsc -p ./tsconfig.cjs.json",
+    "build:mjs": "tsc -p ./tsconfig.mjs.json",
+    "postbuild:cjs": "echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json",
+    "postbuild:mjs": "echo '{\"type\":\"module\"}' > ./dist/mjs/package.json",
+    "build": "npm run build:cjs && npm run build:mjs",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.project-files.json",
+    "spellcheck": "cspell --no-progress './{.github,src,test}/**/*.{ts,js,json}' './*.{md,js}' './package.json'",
+    "format": "prettier --write ./*.{js,json,md} ./src/ ./test/ --no-error-on-unmatched-pattern",
+    "test": "vitest -c vitest.config.mts",
+    "coverage": "vitest run  -c vitest.config.mts --coverage",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run typecheck && npm run spellcheck && npm run lint && npm run coverage",
+    "prepare": "husky install"
+  },
+  "prettier": "@webdeveric/prettier-config",
+  "peerDependencies": {
+    "esbuild": ">=0.15"
+  },
+  "dependencies": {
+    "@types/lodash.escaperegexp": "^4.1.7",
+    "lodash.escaperegexp": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.1",
+    "@vitest/coverage-c8": "^0.30.1",
+    "@webdeveric/eslint-config-ts": "^0.6.0",
+    "@webdeveric/prettier-config": "^0.2.0",
+    "cspell": "^6.31.1",
+    "esbuild": "^0.17.18",
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4",
+    "vitest": "^0.30.1"
+  }
+}
